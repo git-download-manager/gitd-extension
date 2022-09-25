@@ -1,0 +1,35 @@
+  {
+    "manifest_version": 2,
+    "name": "Gitd Download Manager - DEVELOPMENT BUILD",
+    "short_name": "Gitd",
+    "description": "THIS EXTENSION IS FOR BETA TESTING",
+    "version": "BUILD_NUMBER",
+    "homepage_url": "https://github.com/git-download-manager/gitd-extension",
+    "permissions": [
+        "API_URL/*",
+        "webNavigation"
+    ],
+    "icons": { 
+        "16": "icons/16.png",   
+        "32": "icons/32.png",
+        "128": "icons/128.png" 
+    },
+    "author": "Uretgec",
+    "content_scripts": [
+        {
+            "matches": ["*://github.com/*", "*://gitlab.com/*", "*://bitbucket.org/*"],
+            "css": ["gitdStyles.css"],
+            "run_at": "document_idle"
+        },
+        {
+            "matches": ["*://github.com/*", "*://gitlab.com/*", "*://bitbucket.org/*"],
+            "js": ["lib/templates.js", "contentScript.js"],
+            "run_at": "document_start"
+        }
+    ],
+    "background": {
+        "scripts": ["background.js"],
+        "persistent": true
+    },
+    "web_accessible_resources": ["lib/alpine-scp.min.js","lib/fflate.min.js","lib/gitdmanager.js"]
+}
