@@ -1,0 +1,197 @@
+/*Gitd Download Manager Styles*/
+#gitd-init{
+    width: 50%;
+    flex-wrap: wrap;
+    flex-direction: column-reverse;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0.6em 1.8em;
+    z-index: 9999;
+    display: flex;
+    margin:0 auto;
+    border-radius: 0.2rem;
+}
+
+.gitd-shortcut-button {
+    flex-wrap: wrap;
+    justify-content: center;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+}
+
+.gitd-btn, #gitd-init button {
+    display: inline-block;
+    font-weight: 600;
+    color: #525f7f;
+    text-align: center;
+    vertical-align: middle;
+    user-select: none;
+    background-color: transparent;
+    border: 1px solid transparent;
+    padding: 0.625rem 1.25rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    border-radius: 0.25rem;
+    transition: all 0.15s ease;
+    position: relative;
+    will-change: transform;
+    letter-spacing: 0.025em;
+    font-size: 0.875rem;
+}
+
+.gitd-btn:hover, #gitd-init button:hover {
+    transform: translateY(-1px);
+}
+
+.gitd-btn:focus, #gitd-init button:focus {
+    outline: 0;
+    box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+}
+
+.gitd-btn-sm, #gitd-init button.gitd-btn-sm {
+    padding: 0.25rem 0.5rem;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    line-height: 1.5;
+    border-radius: 0.25rem;
+}
+
+.gitd-btn-warning, #gitd-init button.gitd-btn-warning {
+    color: #fff;
+    background-color: #fb6340;
+    border-color: #fb6340;
+    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.gitd-btn-warning:hover, #gitd-init button.gitd-btn-warning:hover {
+    color: #fff;
+    background-color: #fa441b;
+    border-color: #fa3a0e;
+}
+
+
+.gitd-btn-warning:focus, #gitd-init button.gitd-btn-warning:focus {
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08), 0 0 0 0 rgba(252, 122, 93, 0.5);
+}
+
+.gitd-btn svg, #gitd-init button.gitd-btn svg {
+    overflow: hidden;
+    vertical-align: middle;
+}
+
+.gitd-btn svg:not(:last-child), 
+.gitd-btn i:not(:last-child),
+#gitd-init button.gitd-btn svg:not(:last-child),
+#gitd-init button.gitd-btn i:not(:last-child) {
+    margin-right: 0.5rem;
+}
+
+/*AlertBox*/
+.gitd-alert {
+    position: relative;
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+}
+
+.gitd-alert p {
+    margin: 0;
+}
+
+.gitd-alert-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+
+.gitd-alert-light {
+    color: #818182;
+    background-color: #fefefe;
+    border-color: #adb5bd;
+}
+
+.gitd-alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+.gitd-alert-warning {
+    color: #856404;
+    background-color: #fff3cd;
+    border-color: #ffeeba;
+}
+
+.gitd-alert-info {
+    color: #0c5460;
+    background-color: #d1ecf1;
+    border-color: #bee5eb;
+}
+
+.gitd-alert-secondary {
+    color: #383d41;
+    background-color: #e2e3e5;
+    border-color: #d6d8db;
+}
+
+.gitd-alert-dismissible {
+    padding-right: 4rem;
+}
+
+.gitd-alert-dismissible .close, #gitd-init button.close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 2;
+    padding: 0.75rem 1.25rem;
+    color: inherit;
+}
+
+/*Progress*/
+.gitd-progress-percentage {
+    text-align: right;
+}
+
+.gitd-progress {
+    display: flex;
+    height: 1rem;
+    overflow: hidden;
+    font-size: 0.75rem;
+    background-color: #e9ecef;
+    border-radius: 0.25rem;
+    box-shadow: inset 0 0.1rem 0.1rem rgba(0, 0, 0, 0.1);
+}
+
+.gitd-progress-bar {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    background-color: #5e72e4;
+    transition: width 0.6s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .gitd-progress-bar {
+        transition: none;
+    }
+}
+
+.gitd-bg-success {
+    background-color: #2dce89 !important;
+}
+
+.gitd-current-filename {
+    float:left !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
