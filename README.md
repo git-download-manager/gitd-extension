@@ -27,7 +27,7 @@ The "Gitd Start" button is ready for use on every screen you see.
 - Microsoft Edge (Manifestv3)
 
 ## Installation
-### Chrome Store/Firefox Add-Ons
+### 1. Chrome Store/Firefox Add-Ons
 
 Go to [Gitd Download Manager](https://chrome.google.com/webstore/detail/gitd-download-manager/cbnplpkljokdodpligcaolkmodfondhl) Chrome Store Page
 
@@ -35,9 +35,30 @@ Go to [Gitd Download Manager](https://addons.mozilla.org/en-US/firefox/addon/git
 
 Go to [Gitd Download Manager](https://microsoftedge.microsoft.com/addons/detail/-/-) Microsoft Edge Add-Ons Page
 
-### Local Development
+### 2. Production Build For Chrome Store / Firefox Add-on / Microsoft Edge 
 
-- Run `./build.<env>.sh <NEW_VERSION>` (./build.dev.sh 1.0.0) command after go to "build" folder.
+- Go to the folder where the `README.md` file is located and run `./build.prod.sh <NEW_VERSION>` (./build.prod.sh 1.0.1) command after go to "build/prod/<NEW_VERSION>/" folder for zip files of all versions.
+```
+./build/prod/1.0.1/gitd-1.0.1-v2.dev.zip -> Firefox Extension - Development version - Manifest version 2
+./build/prod/1.0.1/gitd-1.0.1-v2.zip -> Firefox Extension - Production Version - Manifest version 2
+./build/prod/1.0.1/gitd-1.0.1-v3.dev.zip -> Chrome Store Extension - Development version - Manifest version 3
+./build/prod/1.0.1/gitd-1.0.1-v3.zip -> Chrome Store Extension - Production Version - Manifest version 3
+```
+
+> Your operating system has to supports `pwd`, `cat`, `sed`, `zip`, `mkdir` Linux commands.
+
+### 3.Local Development / Testing
+
+- Run `./build.<env>.sh <NEW_VERSION>` (./build.dev.sh 1.0.1) command after go to "build/dev/<NEW_VERSION>/" folder for zip files of all versions.
+
+```
+./build/prod/1.0.1/gitd-1.0.1-v2.dev.zip -> Firefox Extension - Development version - Manifest version 2
+./build/prod/1.0.1/gitd-1.0.1-v2.zip -> Firefox Extension - Production Version - Manifest version 2
+./build/prod/1.0.1/gitd-1.0.1-v3.dev.zip -> Chrome Store Extension - Development version - Manifest version 3
+./build/prod/1.0.1/gitd-1.0.1-v3.zip -> Chrome Store Extension - Production Version - Manifest version 3
+```
+
+- or install directly from browser extension page
 
 1. Open Chrome and go to: chrome://extensions/ (same as Firefox)
 2. Enable: "Developer mode"
