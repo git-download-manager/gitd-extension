@@ -3,7 +3,7 @@
     "name": "Gitd Download Manager",
     "short_name": "Gitd",
     "description": "Gitd allows you to download only the files you want without having to download all of the public repository.",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "homepage_url": "https://github.com/git-download-manager/gitd-extension",
     "permissions": [
         "webNavigation"
