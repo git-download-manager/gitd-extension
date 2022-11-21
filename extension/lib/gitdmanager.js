@@ -328,9 +328,6 @@ document.addEventListener('alpine:init', () => {
       // get current tab url
       this.gitUrl = window.location.href
 
-      // get branch name
-      //this.gitBranch = 
-
       // collect form values
       this.validateGitUrl()
       if (!this.gitUrlValid) {
