@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "Gitd Download Manager",
     "short_name": "Gitd",
-    "description": "Gitd allows you to download only the files you want without having to download all of the public repository.",
+    "description": "Download selected files and folders as a zip files with a single click, without the need for any API key or token.",
     "version": "BUILD_NUMBER",
     "homepage_url": "https://github.com/git-download-manager/gitd-extension",
     "permissions": [

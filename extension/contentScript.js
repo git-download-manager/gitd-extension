@@ -28,40 +28,12 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
             // inject gitdmanager
             injectGitdScripts("lib/gitdmanager.js")
-            /*let gitdmanagerjs = chrome.runtime.getURL("lib/gitdmanager.js")
-            let s2 = document.createElement('script')
-            s2.src = gitdmanagerjs;
-            s2.onload = function() {
-                s2.parentNode.removeChild(s2);
-                //this.remove();
-            };
-            (document.body || document.documentElement).appendChild(s2)
-            if (isDebugActive()) console.log(s2);*/
 
             // inject alpine
             injectGitdScripts("lib/alpine-scp.min.js")
-            /*let alpinejs = chrome.runtime.getURL("lib/alpine-scp.min.js")
-            let s = document.createElement('script')
-            s.setAttribute("defer", "defer")
-            s.src = alpinejs;
-            s.onload = function() {
-                s.parentNode.removeChild(s);
-                //this.remove();
-            };
-            (document.head || document.documentElement).appendChild(s)
-            if (isDebugActive()) console.log(s);*/
 
             // inject fflate
             injectGitdScripts("lib/fflate.min.js")
-            /*let afflatejs = chrome.runtime.getURL("lib/fflate.min.js")
-            let s1 = document.createElement('script')
-            s1.src = afflatejs;
-            s1.onload = function() {
-                s1.parentNode.removeChild(s1);
-                //this.remove();
-            };
-            (document.head || document.documentElement).appendChild(s1)
-            if (isDebugActive()) console.log(s1);*/
 
             break;
         default:
@@ -122,18 +94,6 @@ window.addEventListener("turbo:load", function(evt) {
     }, 1500)
 
 }, false);
-
-/*window.addEventListener("turbo:visit", function(evt) {
-    if (isDebugActive()) console.log("content-script", "turbo:visit", evt)
-}, false);
-
-window.addEventListener("pageshow", function(evt) {
-    if (isDebugActive()) console.log("content-script", "pageshow", evt)
-}, false);
-
-window.addEventListener("turbo:frame-render", function(evt) {
-    if (isDebugActive()) console.log("content-script", "turbo:frame-render", evt)
-}, false);*/
 
 // debug mode listener
 window.addEventListener("debug-mode-changed", function(evt) {
