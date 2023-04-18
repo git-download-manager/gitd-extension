@@ -53,6 +53,11 @@ document.addEventListener('alpine:init', () => {
 
         // inject checkbox for select download list
         let navItem = this._findNavItem(hostname)
+        if (navItem.length == 0) {
+          hostname += ".new"
+          navItem = this._findNavItem(hostname)
+        }
+
         if (!!navItem && navItem.length > 0) {
           //console.log("navItem", navItem)
           // inject checkbox
@@ -83,6 +88,9 @@ document.addEventListener('alpine:init', () => {
     _findInsertPosition(hostname) {
         switch (hostname) {
             case "github.com":
+                return "beforebegin"
+                break;
+            case "github.com.new":
                 return "afterbegin"
                 break;
             case "gitlab.com":
@@ -99,9 +107,10 @@ document.addEventListener('alpine:init', () => {
     _findNavItem(hostname) {
         switch (hostname) {
             case "github.com":
+                return document.querySelectorAll("div.js-navigation-item > div:first-child > svg")
+                break;
+            case "github.com.new":
                 return document.querySelectorAll("table > tbody > tr > td > div.react-directory-filename-column > svg")
-                // Old
-                // return document.querySelectorAll("div.js-navigation-item > div:first-child > svg")
                 break;
             case "gitlab.com":
                 return document.querySelectorAll("table.tree-table > tbody > tr.tree-item > td.tree-item-file-name > a > span:first-child")
@@ -123,14 +132,15 @@ document.addEventListener('alpine:init', () => {
       // find item type
       switch (hostname) {
           case "github.com":
+              itemTypeLabel = element.getAttribute("aria-label")
+              break;
+          case "github.com.new":
               itemTypeLabel = element.getAttribute("class")
               if (itemTypeLabel == "icon-directory") {
                 itemTypeLabel = "folder-icon"
               } else {
                 itemTypeLabel = "file-icon"
               }
-              // OLD
-              //itemTypeLabel = element.getAttribute("aria-label")
               break;
           case "gitlab.com":
               itemElement = element.querySelector("svg")
@@ -168,9 +178,10 @@ document.addEventListener('alpine:init', () => {
       // find item type
       switch (hostname) {
           case "github.com":
+              return element.parentElement.nextElementSibling?.querySelector("div > span > a")
+              break;
+          case "github.com.new":
               return element.parentElement.querySelector("div.overflow-hidden > h3 > div > a")
-              // OLD
-              // return element.parentElement.nextElementSibling.querySelector("div > span > a")
               break;
           case "gitlab.com":
               return element.parentElement.querySelector("span:last-child")
@@ -187,6 +198,7 @@ document.addEventListener('alpine:init', () => {
       // find item type
       switch (hostname) {
           case "github.com":
+          case "github.com.new":
               return "<div role=\"gridcell\" class=\"mr-3 flex-shrink-0\"><input class=\"gitd-tree-checkbox\" type=\"checkbox\" data-name=\""+itemPath+"\" data-type=\""+itemType+"\" @click=\"toggleSelectList\"></div>"
               break;
           case "gitlab.com":

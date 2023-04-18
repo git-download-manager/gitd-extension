@@ -65,9 +65,15 @@ window.addEventListener("turbo:load", function(evt) {
     if (isDebugActive()) console.log("content-script", "turbo:load", evt)
 
     setTimeout(function() {
+        let newDesign = false
 
         // checkbox add
-        let navItem = document.querySelectorAll("table > tbody > tr > td > div.react-directory-filename-column > svg")
+        let navItem = document.querySelectorAll("div.js-navigation-item > div:first-child > svg") // old design
+        if (navItem.length == 0) {
+            navItem = document.querySelectorAll("table > tbody > tr > td > div.react-directory-filename-column > svg") // new design
+            newDesign = true
+        }
+
         if (navItem.length > 0) {
 
             // inject checkbox
@@ -76,16 +82,33 @@ window.addEventListener("turbo:load", function(evt) {
                     const element = navItem[key];
 
                     // type: none: 0 - file: 1 - folder: 2
-                    let itemType = element.getAttribute("class")
-                    if (itemType == "icon-directory") {
+                    let itemType = element.getAttribute("aria-label") // old desing
+                    if (newDesign) {
+                        itemType = element.getAttribute("class") // new design
+                    }
+
+                    if (itemType === "Directory") {
+                        itemType = 2
+                    } else if (itemType === "File") {
+                        itemType = 1
+                    } else if (itemType == "icon-directory") {
                         itemType = 2
                     } else {
                         itemType = 1
                     }
 
-                    let pathElement = element.parentElement.querySelector("div.overflow-hidden > h3 > div > a")
+                    let pathElement = element.parentElement.nextElementSibling?.querySelector("div > span > a") // old desing
+                    if (newDesign) {
+                        pathElement = element.parentElement.querySelector("div.overflow-hidden > h3 > div > a") // new design
+                    }
+
                     if (!!pathElement) {
-                        element.parentElement.insertAdjacentHTML("afterbegin", "<div role=\"gridcell\" class=\"mr-3 flex-shrink-0\"><input class=\"gitd-tree-checkbox\" type=\"checkbox\" data-name=\""+pathElement.innerText+"\" data-type=\""+itemType+"\" @click=\"toggleSelectList\"></div>")
+                        let insertPosition = "beforebegin"
+                        if (newDesign) {
+                            insertPosition = "afterbegin"
+                        }
+
+                        element.parentElement.insertAdjacentHTML(insertPosition, "<div role=\"gridcell\" class=\"mr-3 flex-shrink-0\"><input class=\"gitd-tree-checkbox\" type=\"checkbox\" data-name=\""+pathElement.innerText+"\" data-type=\""+itemType+"\" @click=\"toggleSelectList\"></div>")
                     }
                 }
             }
