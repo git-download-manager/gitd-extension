@@ -71,7 +71,7 @@ document.addEventListener('alpine:init', () => {
                 let itemPathElement = this._findNavItemPath(hostname, element)
                 if (!!itemPathElement) {
                   let itemType = this._findNavItemType(hostname, element)
-                  element.parentElement.insertAdjacentHTML("beforebegin", this._findNavItemCheckbox(hostname, itemPathElement.innerText, itemType))
+                  element.parentElement.insertAdjacentHTML(this._findInsertPosition(hostname), this._findNavItemCheckbox(hostname, itemPathElement.innerText, itemType))
                 }
             }
           }
@@ -80,10 +80,28 @@ document.addEventListener('alpine:init', () => {
       
     },
 
+    _findInsertPosition(hostname) {
+        switch (hostname) {
+            case "github.com":
+                return "afterbegin"
+                break;
+            case "gitlab.com":
+                return "beforebegin"
+                break;
+            case "bitbucket.org":
+                return "beforebegin"
+                break;
+        }
+        
+        return null
+    },
+
     _findNavItem(hostname) {
         switch (hostname) {
             case "github.com":
-                return document.querySelectorAll("div.js-navigation-item > div:first-child > svg")
+                return document.querySelectorAll("table > tbody > tr > td > div.react-directory-filename-column > svg")
+                // Old
+                // return document.querySelectorAll("div.js-navigation-item > div:first-child > svg")
                 break;
             case "gitlab.com":
                 return document.querySelectorAll("table.tree-table > tbody > tr.tree-item > td.tree-item-file-name > a > span:first-child")
@@ -105,7 +123,14 @@ document.addEventListener('alpine:init', () => {
       // find item type
       switch (hostname) {
           case "github.com":
-              itemTypeLabel = element.getAttribute("aria-label")
+              itemTypeLabel = element.getAttribute("class")
+              if (itemTypeLabel == "icon-directory") {
+                itemTypeLabel = "folder-icon"
+              } else {
+                itemTypeLabel = "file-icon"
+              }
+              // OLD
+              //itemTypeLabel = element.getAttribute("aria-label")
               break;
           case "gitlab.com":
               itemElement = element.querySelector("svg")
@@ -143,7 +168,9 @@ document.addEventListener('alpine:init', () => {
       // find item type
       switch (hostname) {
           case "github.com":
-              return element.parentElement.nextElementSibling.querySelector("div > span > a")
+              return element.parentElement.querySelector("div.overflow-hidden > h3 > div > a")
+              // OLD
+              // return element.parentElement.nextElementSibling.querySelector("div > span > a")
               break;
           case "gitlab.com":
               return element.parentElement.querySelector("span:last-child")
