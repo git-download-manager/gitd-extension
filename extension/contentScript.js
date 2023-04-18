@@ -67,7 +67,7 @@ window.addEventListener("turbo:load", function(evt) {
     setTimeout(function() {
 
         // checkbox add
-        let navItem = document.querySelectorAll("div.js-navigation-item > div:first-child > svg")
+        let navItem = document.querySelectorAll("table > tbody > tr > td > div.react-directory-filename-column > svg")
         if (navItem.length > 0) {
 
             // inject checkbox
@@ -76,16 +76,16 @@ window.addEventListener("turbo:load", function(evt) {
                     const element = navItem[key];
 
                     // type: none: 0 - file: 1 - folder: 2
-                    let itemType = element.getAttribute("aria-label")
-                    if (itemType === "Directory") {
+                    let itemType = element.getAttribute("class")
+                    if (itemType == "icon-directory") {
                         itemType = 2
-                    } else if (itemType === "File") {
+                    } else {
                         itemType = 1
                     }
 
-                    let pathElement = element.parentElement.nextElementSibling.querySelector("div > span > a")
+                    let pathElement = element.parentElement.querySelector("div.overflow-hidden > h3 > div > a")
                     if (!!pathElement) {
-                        element.parentElement.insertAdjacentHTML("beforebegin", "<div role=\"gridcell\" class=\"mr-3 flex-shrink-0\"><input class=\"gitd-tree-checkbox\" type=\"checkbox\" data-name=\""+pathElement.innerText+"\" data-type=\""+itemType+"\" @click=\"toggleSelectList\"></div>")
+                        element.parentElement.insertAdjacentHTML("afterbegin", "<div role=\"gridcell\" class=\"mr-3 flex-shrink-0\"><input class=\"gitd-tree-checkbox\" type=\"checkbox\" data-name=\""+pathElement.innerText+"\" data-type=\""+itemType+"\" @click=\"toggleSelectList\"></div>")
                     }
                 }
             }

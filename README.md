@@ -97,3 +97,6 @@ See LICENSE for more details.
 
 [Microsoft Edge Manifest Docs](https://learn.microsoft.com/en-us/microsoft-edge/extensions-chromium/getting-started/manifest-format) * firefox alternate
 
+## Changelog
+v1.0.2
+- compatible with github new design
