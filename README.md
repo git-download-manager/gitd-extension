@@ -99,6 +99,9 @@ See LICENSE for more details.
 
 ## Changelog
 v1.0.3
+- update manifest description
+
+v1.0.3
 - compatible with github both page design
 
 v1.0.2

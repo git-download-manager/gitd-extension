@@ -2,7 +2,7 @@
     "manifest_version": 2,
     "name": "Gitd Download Manager",
     "short_name": "Gitd",
-    "description": "Download selected files and folders as a zip files with a single click, without the need for any API key or token.",
+    "description": "Download at Github,Bitbucket,Gitlab repository's selected files, folders as a zip file with a single click, without any api token.",
     "version": "BUILD_NUMBER",
     "homepage_url": "https://github.com/git-download-manager/gitd-extension",
     "permissions": [
