@@ -3,7 +3,7 @@
     "name": "Gitd Download Manager",
     "short_name": "Gitd",
     "description": "Download at Github,Bitbucket,Gitlab repository's selected files, folders as a zip file with a single click, without any api token.",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "homepage_url": "https://github.com/git-download-manager/gitd-extension",
     "permissions": [
         "webNavigation"

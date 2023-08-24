@@ -42,11 +42,13 @@ document.addEventListener('alpine:init', () => {
 
     activateGitdInit() {
       if (this.isDebugActive()) console.log("toggleGitdInit");
+
+      this.gitdInit = true
+      this.gitdInitText = "Gitd Ready"
       
       // check gitd-init attribute
       if (document.querySelector(".gitd-tree-checkbox") === null) {
-        this.gitdInit = true
-        this.gitdInitText = "Gitd Ready"
+        if (this.isDebugActive()) console.log("toggleGitdInit", "checkbox init started");
 
         // hostname
         let hostname = window.location.hostname
