@@ -7,7 +7,8 @@
     "homepage_url": "https://github.com/git-download-manager/gitd-extension",
     "permissions": [
         "API_URL/*",
-        "webNavigation"
+        "webNavigation",
+        "tabs"
     ],
     "icons": { 
         "16": "icons/16.png",   
@@ -17,14 +18,14 @@
     "author": "Uretgec",
     "content_scripts": [
         {
-            "matches": ["*://github.com/*", "*://gitlab.com/*", "*://bitbucket.org/*"],
+            "matches": ["*://github.com/*", "*://gitlab.com/*", "*://bitbucket.org/*", "*://gitea.com/*"],
             "css": ["gitdStyles.css"],
-            "run_at": "document_idle"
+            "run_at": "document_end"
         },
         {
-            "matches": ["*://github.com/*", "*://gitlab.com/*", "*://bitbucket.org/*"],
-            "js": ["lib/templates.js", "contentScript.js"],
-            "run_at": "document_start"
+            "matches": ["*://github.com/*", "*://gitlab.com/*", "*://bitbucket.org/*", "*://gitea.com/*"],
+            "js": ["contentScript.js"],
+            "run_at": "document_end"
         }
     ],
     "background": {

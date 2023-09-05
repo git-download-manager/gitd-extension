@@ -6,7 +6,8 @@
     "version": "BUILD_NUMBER",
     "homepage_url": "https://github.com/git-download-manager/gitd-extension",
     "permissions": [
-        "webNavigation"
+        "webNavigation",
+        "tabs"
     ],
     "host_permissions": [
         "API_URL/*"
@@ -20,14 +21,14 @@
     "offline_enabled": false,
     "content_scripts": [
         {
-            "matches": ["*://github.com/*", "*://gitlab.com/*", "*://bitbucket.org/*"],
+            "matches": ["*://github.com/*", "*://gitlab.com/*", "*://bitbucket.org/*", "*://gitea.com/*"],
             "css": ["gitdStyles.css"],
-            "run_at": "document_idle"
+            "run_at": "document_end"
         },
         {
-            "matches": ["*://github.com/*", "*://gitlab.com/*", "*://bitbucket.org/*"],
-            "js": ["lib/templates.js", "contentScript.js"],
-            "run_at": "document_start"
+            "matches": ["*://github.com/*", "*://gitlab.com/*", "*://bitbucket.org/*", "*://gitea.com/*"],
+            "js": ["contentScript.js"],
+            "run_at": "document_end"
         }
     ],
     "background": {
@@ -36,7 +37,7 @@
     "web_accessible_resources": [
         {
             "resources": [ "lib/alpine-scp.min.js","lib/fflate.min.js","lib/gitdmanager.js" ],
-            "matches": ["*://github.com/*", "*://gitlab.com/*", "*://bitbucket.org/*"]
+            "matches": ["*://github.com/*", "*://gitlab.com/*", "*://bitbucket.org/*", "*://gitea.com/*"]
         }
     ],
     "externally_connectable": {
