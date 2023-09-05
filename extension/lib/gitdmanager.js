@@ -39,52 +39,124 @@ document.addEventListener('alpine:init', () => {
     // init
     gitdInit: false,
     gitdInitText: "Gitd Start",
+    gitdInitTemplate: `<div id="gitd-init">
+    <template aria-label="alert-box" x-if="alertBox" x-transition>
+        <div x-bind:class="alertType" class="gitd-alert gitd-alert-dismissible">
+            <button @click="removeSelectListBox" type="button" class="gitd-btn close">
+                <span>&times;</span>
+            </button>
+            <p x-html="alertMessage"></p>
+        </div>
+    </template>
+    <template aria-label="progress-bar" x-if="downloadProgress" x-transition>
+        <div class="gitd-alert gitd-alert-light">
+            <div class="gitd-progress-info">
+                <div class="gitd-progress-label">
+                    <span @zip-file-download.window="zipFileDownloadEvt" x-text="zipFileDownloadText"></span>
+                    <span @zip-file-prepare.window="zipFilePrepareEvt" x-text="zipFilePrepareText" style="float:right !important;"></span>
+                </div>
+                <div class="gitd-progress-percentage">
+                    <span @current-file-download.window="currentFileDownloadEvt" x-text="currentFileDownloadText" class="gitd-current-filename"></span>
+                    <span x-text="calculateProgressBarText"></span>
+                </div>
+            </div>
+            <div class="gitd-progress">
+                <div class="progress-bar gitd-bg-success" x-bind:style="calculateProgressBarStyle" style="width:0%;"></div>
+            </div>
+        </div>
+    </template>
+    </div>
+    <template id="gitd-init-notifybox" aria-label="notifyBox" x-if="notifyBox">
+      <div x-transition style="position: fixed; top: 120px; right: 30px; z-index:9999;">
+          <div x-bind:class="notifyType" class="gitd-alert gitd-alert-dismissible">
+              <button @click="removeNotifyBox" type="button" class="gitd-btn close">
+                  <span>&times;</span>
+              </button>
+              <span x-text="notifyMessage"></span>
+          </div>
+      </div>
+    </template>`,
 
     activateGitdInit() {
-      if (this.isDebugActive()) console.log("toggleGitdInit");
+      if (this.isDebugActive()) console.log("toggleGitdInit", this.gitdInit, (this.gitdInit)?"reload":"init")
 
-      this.gitdInit = true
-      this.gitdInitText = "Gitd Ready"
-      
-      // check gitd-init attribute
-      if (document.querySelector(".gitd-tree-checkbox") === null) {
-        if (this.isDebugActive()) console.log("toggleGitdInit", "checkbox init started");
+      // add checkbox
+      // hostname
+      let hostname = window.location.hostname
 
-        // hostname
-        let hostname = window.location.hostname
+      // inject checkbox for select download list
+      let navItem = this._findNavItem(hostname)
+      if (navItem.length == 0) {
+        hostname += ".new"
+        navItem = this._findNavItem(hostname)
+      }
 
-        // inject checkbox for select download list
-        let navItem = this._findNavItem(hostname)
-        if (navItem.length == 0) {
-          hostname += ".new"
-          navItem = this._findNavItem(hostname)
+      if (!!navItem && navItem.length > 0) {
+        if (this.isDebugActive()) console.log("navItem", navItem)
+        
+        if (this.isDebugActive()) console.log("toggleGitdInit", this.gitdInit, (this.gitdInit)?"reload":"init")
+
+        // reload button
+        this.gitdInit = false
+        this.gitdInitText = "Gitd Start"
+
+        // reset all open boxes
+        this.removeSelectListBox()
+        this.removeNotifyBox()
+
+        // remove templates
+        if (document.getElementById("gitd-init")) {
+          document.getElementById("gitd-init").remove()
+        }
+        if (document.getElementById("gitd-init-notifybox")) {
+          document.getElementById("gitd-init-notifybox").remove()
         }
 
-        if (!!navItem && navItem.length > 0) {
-          //console.log("navItem", navItem)
-          // inject checkbox
-          for (const key in navItem) {
-            if (Object.hasOwnProperty.call(navItem, key)) {
-                const element = navItem[key];
+        // remove checkboxes if exists
+        let gitdCheckboxes = document.querySelectorAll(".gitd-tree-checkbox-container")
+        if (gitdCheckboxes.length > 0) {
+          // remove checkbox
+          gitdCheckboxes.forEach(e => e.remove())
+        }
+        
+        // git init false
+        if (this.isDebugActive()) console.log("toggleGitdInit", "checkbox init started");
 
-                // root row not allowed
-                if (key === "0") {                  
-                  // for bitbucket.org
-                  if (element.parentElement.getAttribute("href") === "..") {
-                    continue
-                  }
-                }
+        // add templates
+        if (document.getElementById("gitd-container-template")) {
+          document.querySelector("div.gitd-shortcut-button").insertAdjacentHTML("afterend", this.gitdInitTemplate)
+        }
 
-                let itemPathElement = this._findNavItemPath(hostname, element)
-                if (!!itemPathElement) {
-                  let itemType = this._findNavItemType(hostname, element)
-                  element.parentElement.insertAdjacentHTML(this._findInsertPosition(hostname), this._findNavItemCheckbox(hostname, itemPathElement.innerText, itemType))
+
+
+        // inject checkbox
+        for (const key in navItem) {
+          if (Object.hasOwnProperty.call(navItem, key)) {
+              const element = navItem[key];
+
+              // root row not allowed
+              if (key === "0") {                  
+                // for bitbucket.org
+                if (element.parentElement.getAttribute("href") === "..") {
+                  continue
                 }
-            }
+              }
+
+              let itemPathElement = this._findNavItemPath(hostname, element)
+              if (this.isDebugActive()) console.log("navItemPath", itemPathElement)
+              if (!!itemPathElement) {
+                let itemType = this._findNavItemType(hostname, element)
+                if (this.isDebugActive()) console.log("navItemType", itemType)
+
+                element.parentElement.insertAdjacentHTML(this._findInsertPosition(hostname), this._findNavItemCheckbox(hostname, itemPathElement.innerText, itemType))
+              }
           }
         }
       }
-      
+
+      // update button
+      this.gitdInit = true
+      this.gitdInitText = "Gitd Ready"
     },
 
     _findInsertPosition(hostname) {
@@ -101,11 +173,14 @@ document.addEventListener('alpine:init', () => {
             case "bitbucket.org":
                 return "beforebegin"
                 break;
+            case "gitea.com":
+                return "beforebegin"
+                break;
         }
         
         return null
     },
-
+    // find where checkbox import correctly
     _findNavItem(hostname) {
         switch (hostname) {
             case "github.com":
@@ -120,11 +195,14 @@ document.addEventListener('alpine:init', () => {
             case "bitbucket.org":
                 return document.querySelectorAll("div.css-hix1c1 > table > tbody > tr > td > a > span:first-child")
                 break;
+            case "gitea.com":
+                return document.querySelectorAll("#repo-files-table > tbody > tr > td.name.four.wide > span > svg")
+                break;
         }
         
         return null
     },
-
+    // find selected type (file or folder)
     _findNavItemType(hostname, element) {
       // type: none: 0 - file: 1 - folder: 2
       let itemType = 1
@@ -160,6 +238,16 @@ document.addEventListener('alpine:init', () => {
                   }
               }
               break;
+          case "gitea.com":
+              itemElement = element
+              if (!!itemElement) {
+                  if (this._hasClass(itemElement, "octicon-file-directory-fill")) {
+                    itemTypeLabel = "folder-icon"
+                  } else if (this._hasClass(itemElement, "octicon-file")) {
+                    itemTypeLabel = "file-icon"
+                  }
+              }
+              break;
       }
 
       // bitbucket.org item type labels => "Directory," "File," -> epic fail
@@ -175,7 +263,7 @@ document.addEventListener('alpine:init', () => {
     _hasClass(element, className) {
       return (' ' + element.className + ' ').indexOf(' ' + className+ ' ') > -1;
     },
-
+    // find selected file or folder name
     _findNavItemPath(hostname, element) {
       // find item type
       switch (hostname) {
@@ -191,23 +279,29 @@ document.addEventListener('alpine:init', () => {
           case "bitbucket.org":
               return element.querySelector("span.css-15qk21d")
               break;
+          case "gitea.com":
+              return element.parentElement.querySelector("td.name > span > a")
+              break;
       }
       
       return null
     },
-
+    // inject checkbox html data with element data (file or folder and name)
     _findNavItemCheckbox(hostname, itemPath = "", itemType = 1) {
       // find item type
       switch (hostname) {
           case "github.com":
           case "github.com.new":
-              return "<div role=\"gridcell\" class=\"mr-3 flex-shrink-0\"><input class=\"gitd-tree-checkbox\" type=\"checkbox\" data-name=\""+itemPath+"\" data-type=\""+itemType+"\" @click=\"toggleSelectList\"></div>"
+              return "<div role=\"gridcell\" class=\"mr-3 flex-shrink-0 gitd-tree-checkbox-container\"><input class=\"gitd-tree-checkbox\" type=\"checkbox\" data-name=\""+itemPath+"\" data-type=\""+itemType+"\" @click=\"toggleSelectList\"></div>"
               break;
           case "gitlab.com":
-              return "<span role=\"gridcell\" style=\"padding:5px 15px;z-index:9999;position:relative;\"><input class=\"gitd-tree-checkbox\" style=\"position:absolute;left:10px;top:8px;\" type=\"checkbox\" data-name=\""+itemPath+"\" data-type=\""+itemType+"\" @click=\"toggleSelectList\"></span>"
+              return "<span role=\"gridcell\" class=\"gitd-tree-checkbox-container\" style=\"padding:5px 15px;z-index:99;position:relative;\"><input class=\"gitd-tree-checkbox\" style=\"position:absolute;left:10px;top:8px;\" type=\"checkbox\" data-name=\""+itemPath+"\" data-type=\""+itemType+"\" @click=\"toggleSelectList\"></span>"
               break;
           case "bitbucket.org":
-              return "<span role=\"gridcell\" class=\"mr-3 flex-shrink-0\"><input class=\"gitd-tree-checkbox\" type=\"checkbox\" data-name=\""+itemPath+"\" data-type=\""+itemType+"\" @click=\"toggleSelectList\"></span>"
+              return "<span role=\"gridcell\" class=\"mr-3 flex-shrink-0 gitd-tree-checkbox-container\"><input class=\"gitd-tree-checkbox\" type=\"checkbox\" data-name=\""+itemPath+"\" data-type=\""+itemType+"\" @click=\"toggleSelectList\"></span>"
+              break;
+          case "gitea.com":
+              return "<span role=\"gridcell\" class=\"gitd-tree-checkbox-container\" style=\"padding:5px 10px 5px 0;z-index:1;position:relative;\"><input class=\"gitd-tree-checkbox\" type=\"checkbox\" data-name=\""+itemPath+"\" data-type=\""+itemType+"\" @click=\"toggleSelectList\"></span>"
               break;
       }
       
@@ -232,7 +326,6 @@ document.addEventListener('alpine:init', () => {
           }
         ))
       }
-
       return window.gitdDebugMode
     },
 
@@ -266,7 +359,7 @@ document.addEventListener('alpine:init', () => {
     },
 
     validateGitUrl() {
-      const regex = /https:\/\/(github\.com|bitbucket\.org|gitlab\.com)(\S+)(\/|\/([\w#!:.?+=&%@!\-\/]))?/sg;
+      const regex = /https:\/\/(github\.com|bitbucket\.org|gitlab\.com|gitea\.com)(\S+)(\/|\/([\w#!:.?+=&%@!\-\/]))?/sg;
       this.gitUrlValid = regex.test(this.gitUrl)
     },
 
@@ -336,7 +429,7 @@ document.addEventListener('alpine:init', () => {
     },
 
     // limitations
-    selectListLimit: 5, // select max file or folder in current tree list
+    selectListLimit: 10, // select max file or folder in current tree list
 
     // Fetch Objects
     currentBranch: "",
