@@ -1,8 +1,8 @@
 # Gitd Download Manager Browser Extension
 
-It is a browser extension that allows you to download only the files/folders you want without having to download all of the public repository. Github.com, Bitbucket.org, Gitlab.com provides all of the public repos in git services to download selected files and folders as a zip files with a single click, without the need for any API key or token.
+It is a browser extension that allows you to download only the files/folders you want without having to download all of the public repository. Github.com, Bitbucket.org, Gitlab.com, Gitea.com provides all of the public repos in git services to download selected files and folders as a zip files with a single click, without the need for any API key or token.
 
-The "Gitd Start" button is ready for use on every screen you see.
+If you see "Gitd Start" button, It is ready for use on every screen you see. You have to to click (checkboxes appears) and can starting to select files.
 
 > Note: Gitd Download Manager browser extension creates download lists using Gitdownloadmanager.com api service.
 
@@ -10,13 +10,13 @@ The "Gitd Start" button is ready for use on every screen you see.
 
 ## Features
 
-- Support only Github.com, Bitbucket.org, Gitlab.com public repositories page
+- Support only Github.com, Bitbucket.org, Gitlab.com, Gitea.com public repositories page
 - Not neeeded ApiKey/ApiToken
 - Support single or multiple files download
 - Download selected contents as a zip file with one click
 - Support all branches
-- Maximum Selection Limit: 5
-- Maximum Download Files: 5000
+- Maximum Selection Limit: 10
+- Maximum Download Files: 10000
 
 ![screenshot](screenshots/gitd-manager-github-download.jpeg)
 
@@ -112,6 +112,13 @@ See LICENSE for more details.
 [Microsoft Edge Manifest Docs](https://learn.microsoft.com/en-us/microsoft-edge/extensions-chromium/getting-started/manifest-format) * firefox alternate
 
 ## Changelog
+
+v1.0.6
+
+- add Gitea.com service
+- increased selection limit and files
+- remove auto initialize all of the services. excepts Github.com
+- remove Github.com turbo event listeners
 
 v1.0.5
 

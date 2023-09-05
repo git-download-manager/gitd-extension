@@ -27,6 +27,10 @@ let urlFilters = {
         {
             hostEquals:'bitbucket.org',
             schemes:["https"]
+        },
+        {
+            hostEquals:'gitea.com',
+            schemes:["https"]
         }
     ]
 }
@@ -44,11 +48,21 @@ chrome.webNavigation.onCompleted.addListener(function (details) {
     })
 }, urlFilters)
 
-chrome.webNavigation.onHistoryStateUpdated.addListener(function (details) {
-    chrome.tabs.sendMessage(details.tabId, {
-        action: 'IM_CHANGED'
-    })
-}, urlFilters)
+// adds a listener to tab change
+chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+    // check for a URL in the changeInfo parameter (url is only added when it is changed)
+    if (changeInfo.url) {
+        chrome.tabs.sendMessage(tabId, {
+            action: 'URL_CHANGED'
+        })
+    }
+})
+
+// chrome.webNavigation.onHistoryStateUpdated.addListener(function (details) {
+//     chrome.tabs.sendMessage(details.tabId, {
+//         action: 'IM_CHANGED'
+//     })
+// }, urlFilters)
 
 // gitdmanager api request listener
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
