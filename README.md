@@ -10,7 +10,7 @@ If you see "Gitd Start" button, It is ready for use on every screen you see. You
 
 ## Features
 
-- Support only Github.com, Bitbucket.org, Gitlab.com, Gitea.com public repositories page
+- Support only Github.com, Bitbucket.org, Gitlab.com, Gitea.com, Gitee.com public repositories page
 - Not neeeded ApiKey/ApiToken
 - Support single or multiple files download
 - Download selected contents as a zip file with one click
