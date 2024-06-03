@@ -176,6 +176,9 @@ document.addEventListener('alpine:init', () => {
             case "gitea.com":
                 return "beforebegin"
                 break;
+            case "gitee.com":
+                return "afterbegin"
+                break;
         }
         
         return null
@@ -197,6 +200,9 @@ document.addEventListener('alpine:init', () => {
                 break;
             case "gitea.com":
                 return document.querySelectorAll("#repo-files-table > tbody > tr > td.name.four.wide > span > svg")
+                break;
+            case "gitee.com":
+                return document.querySelectorAll("#tree-slider > div.row.tree-item > div.five.wide.column.tree-item-file-name.tree-list-item.d-align-center > i")
                 break;
         }
         
@@ -248,6 +254,16 @@ document.addEventListener('alpine:init', () => {
                   }
               }
               break;
+          case "gitee.com":
+              itemElement = element
+              if (!!itemElement) {
+                  if (this._hasClass(itemElement, "icon-folders")) {
+                    itemTypeLabel = "folder-icon"
+                  } else if (this._hasClass(itemElement, "icon-file")) {
+                    itemTypeLabel = "file-icon"
+                  }
+              }
+              break;
       }
 
       // bitbucket.org item type labels => "Directory," "File," -> epic fail
@@ -282,6 +298,9 @@ document.addEventListener('alpine:init', () => {
           case "gitea.com":
               return element.parentElement.querySelector("td.name > span > a")
               break;
+          case "gitee.com":
+              return element.parentElement.querySelector("a")
+              break;
       }
       
       return null
@@ -302,6 +321,9 @@ document.addEventListener('alpine:init', () => {
               break;
           case "gitea.com":
               return "<span role=\"gridcell\" class=\"gitd-tree-checkbox-container\" style=\"padding:5px 10px 5px 0;z-index:1;position:relative;\"><input class=\"gitd-tree-checkbox\" type=\"checkbox\" data-name=\""+itemPath+"\" data-type=\""+itemType+"\" @click=\"toggleSelectList\"></span>"
+              break;
+          case "gitee.com":
+              return "<div role=\"gridcell\" class=\"gitd-tree-checkbox-container\" style=\"padding:5px 10px 5px 0;z-index:1;position:relative;\"><input class=\"gitd-tree-checkbox\" type=\"checkbox\" data-name=\""+itemPath+"\" data-type=\""+itemType+"\" @click=\"toggleSelectList\"></div>"
               break;
       }
       
@@ -359,7 +381,7 @@ document.addEventListener('alpine:init', () => {
     },
 
     validateGitUrl() {
-      const regex = /https:\/\/(github\.com|bitbucket\.org|gitlab\.com|gitea\.com)(\S+)(\/|\/([\w#!:.?+=&%@!\-\/]))?/sg;
+      const regex = /https:\/\/(github\.com|bitbucket\.org|gitlab\.com|gitea\.com|gitee\.com)(\S+)(\/|\/([\w#!:.?+=&%@!\-\/]))?/sg;
       this.gitUrlValid = regex.test(this.gitUrl)
     },
 
@@ -615,11 +637,11 @@ document.addEventListener('alpine:init', () => {
     _generateSingleFilePath(breadcrumd, filename) {
       let path = []
       if (breadcrumd.length > 0) {
-        for (const index in breadcrumd) {
-            if (index == 0) {
-              continue
-            }
-            path.push(breadcrumd[index])            
+        for (let index = 0; index < breadcrumd.length; index++) {
+          if (index === 0) {
+            continue
+          }
+          path.push(breadcrumd[index])
         }
       }
 

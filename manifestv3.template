@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "Gitd Download Manager",
     "short_name": "Gitd",
-    "description": "Download at Github,Bitbucket,Gitlab,Gitea repository's selected files, folders as a zip file with a single click, without api token.",
+    "description": "Download at Github,Bitbucket,Gitlab,Gitea,Gitee repository's selected files, folders as a zip file with a single click, without api token.",
     "version": "BUILD_NUMBER",
     "homepage_url": "https://github.com/git-download-manager/gitd-extension",
     "permissions": [
@@ -21,12 +21,12 @@
     "offline_enabled": false,
     "content_scripts": [
         {
-            "matches": ["*://github.com/*", "*://gitlab.com/*", "*://bitbucket.org/*", "*://gitea.com/*"],
+            "matches": ["*://github.com/*", "*://gitlab.com/*", "*://bitbucket.org/*", "*://gitea.com/*", "*://gitee.com/*"],
             "css": ["gitdStyles.css"],
             "run_at": "document_end"
         },
         {
-            "matches": ["*://github.com/*", "*://gitlab.com/*", "*://bitbucket.org/*", "*://gitea.com/*"],
+            "matches": ["*://github.com/*", "*://gitlab.com/*", "*://bitbucket.org/*", "*://gitea.com/*", "*://gitee.com/*"],
             "js": ["contentScript.js"],
             "run_at": "document_end"
         }
@@ -37,7 +37,7 @@
     "web_accessible_resources": [
         {
             "resources": [ "lib/alpine-scp.min.js","lib/fflate.min.js","lib/gitdmanager.js" ],
-            "matches": ["*://github.com/*", "*://gitlab.com/*", "*://bitbucket.org/*", "*://gitea.com/*"]
+            "matches": ["*://github.com/*", "*://gitlab.com/*", "*://bitbucket.org/*", "*://gitea.com/*", "*://gitee.com/*"]
         }
     ],
     "externally_connectable": {

@@ -1,6 +1,6 @@
 # Gitd Download Manager Browser Extension
 
-It is a browser extension that allows you to download only the files/folders you want without having to download all of the public repository. Github.com, Bitbucket.org, Gitlab.com, Gitea.com provides all of the public repos in git services to download selected files and folders as a zip files with a single click, without the need for any API key or token.
+It is a browser extension that allows you to download only the files/folders you want without having to download all of the public repository. Github.com, Bitbucket.org, Gitlab.com, Gitea.com, Gitee.com provides all of the public repos in git services to download selected files and folders as a zip files with a single click, without the need for any API key or token.
 
 If you see "Gitd Start" button, It is ready for use on every screen you see. You have to to click (checkboxes appears) and can starting to select files.
 
@@ -30,7 +30,7 @@ If you see "Gitd Start" button, It is ready for use on every screen you see. You
 
 - Chrome (Manifestv3)
 - Firefox (Manifestv2)
-- Microsoft Edge (Manifestv3)
+- Microsoft Edge (Manifestv3) (I not login to My Microsoft Account????)
 
 ## Installation
 
@@ -85,7 +85,8 @@ Go to [Gitd Download Manager](https://microsoftedge.microsoft.com/addons/detail/
 [Github.com](https://github.com/search/advanced) advanced search page.
 [Gitlab.com](https://gitlab.com/explore/projects) advanced search page.
 [Bitbucket.org](https://bitbucket.org/repo/all) simple search page.
-[Gitea.com](https://gitea.com/explore/repos) simple search page. (NOT SUPPORTED YET)
+[Gitea.com](https://gitea.com/explore/repos) simple search page.
+[Gitee.com](https://gitee.com/explore) simple search page.
 
 ## Licence
 
@@ -113,12 +114,17 @@ See LICENSE for more details.
 
 ## Changelog
 
+v1.0.7
+
+- adds Gitee.com service (archive download not supported)
+- fixed file list strange loop index issue
+
 v1.0.6
 
-- add Gitea.com service
-- increased selection limit and files
-- remove auto initialize all of the services. excepts Github.com
-- remove Github.com turbo event listeners
+- adds Gitea.com service
+- increases selection limit and files
+- removes auto initialize all of the services. excepts Github.com
+- removes Github.com turbo event listeners
 
 v1.0.5
 
