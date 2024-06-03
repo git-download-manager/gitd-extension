@@ -31,6 +31,10 @@ let urlFilters = {
         {
             hostEquals:'gitea.com',
             schemes:["https"]
+        },
+        {
+            hostEquals:'gitee.com', // https://github.com/git-download-manager/gitd-extension/issues/4
+            schemes:["https"]
         }
     ]
 }

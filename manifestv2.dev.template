@@ -18,12 +18,12 @@
     "author": "Uretgec",
     "content_scripts": [
         {
-            "matches": ["*://github.com/*", "*://gitlab.com/*", "*://bitbucket.org/*", "*://gitea.com/*"],
+            "matches": ["*://github.com/*", "*://gitlab.com/*", "*://bitbucket.org/*", "*://gitea.com/*", "*://gitee.com/*"],
             "css": ["gitdStyles.css"],
             "run_at": "document_end"
         },
         {
-            "matches": ["*://github.com/*", "*://gitlab.com/*", "*://bitbucket.org/*", "*://gitea.com/*"],
+            "matches": ["*://github.com/*", "*://gitlab.com/*", "*://bitbucket.org/*", "*://gitea.com/*", "*://gitee.com/*"],
             "js": ["contentScript.js"],
             "run_at": "document_end"
         }
