@@ -114,6 +114,10 @@ See LICENSE for more details.
 
 ## Changelog
 
+v1.0.8
+
+- fixed Github new css selector for file name
+
 v1.0.7
 
 - adds Gitee.com service (archive download not supported)
