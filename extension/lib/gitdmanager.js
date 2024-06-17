@@ -127,8 +127,6 @@ document.addEventListener('alpine:init', () => {
           document.querySelector("div.gitd-shortcut-button").insertAdjacentHTML("afterend", this.gitdInitTemplate)
         }
 
-
-
         // inject checkbox
         for (const key in navItem) {
           if (Object.hasOwnProperty.call(navItem, key)) {
@@ -287,7 +285,8 @@ document.addEventListener('alpine:init', () => {
               return element.parentElement.nextElementSibling?.querySelector("div > span > a")
               break;
           case "github.com.new":
-              return element.parentElement.querySelector("div.overflow-hidden > h3 > div > a")
+              //return element.parentElement.querySelector("div.overflow-hidden > h3 > div > a") // v1.0.7
+              return element.parentElement.querySelector("div.overflow-hidden > div > div > a")
               break;
           case "gitlab.com":
               return element.parentElement.querySelector("span:last-child")
