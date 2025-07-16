@@ -191,7 +191,7 @@ document.addEventListener('alpine:init', () => {
                 return document.querySelectorAll("table > tbody > tr > td > div.react-directory-filename-column > svg")
                 break;
             case "gitlab.com":
-                return document.querySelectorAll("table.tree-table > tbody > tr.tree-item > td.tree-item-file-name > a > span:first-child")
+                return document.querySelectorAll("table.tree-table > tbody > tr.tree-item > th.tree-item-file-name > a > span:first-child")
                 break;
             case "bitbucket.org":
                 return document.querySelectorAll("div.css-hix1c1 > table > tbody > tr > td > a > span:first-child")
