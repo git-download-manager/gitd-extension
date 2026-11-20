@@ -966,13 +966,13 @@ GitdZip.prototype.add = async function(filename) {
     const contentLength = response.headers.get('content-length')
     const total = !contentLength ? -1 : parseInt(contentLength, 10)
 
-    const ext = filename.slice(filename.lastIndexOf('.') + 1);
-    const zippedFileStream = (self.incompressibleTypes.has(ext)) 
+    const ext = filename.slice(filename.lastIndexOf('.') + 1).toLowerCase();
+    // fix: big files (> 500kb) used AsyncZipDeflate which starts a web worker,
+    // but github blocks workers so the file never finished and no zip was downloaded.
+    // use normal ZipDeflate for all files instead (level 6 for big files, faster)
+    const zippedFileStream = (self.incompressibleTypes.has(ext))
       ? new fflate.ZipPassThrough(filename)
-      //: new fflate.ZipDeflate(filename, { level: 9 })
-      : total > self.largeFileSize
-        ? new fflate.AsyncZipDeflate(filename, { level: 9 })
-        : new fflate.ZipDeflate(filename, { level: 9 })
+      : new fflate.ZipDeflate(filename, { level: total > self.largeFileSize ? 6 : 9 })
     
     zippedFileStream.mtime = new Date()
 
@@ -1005,6 +1005,8 @@ GitdZip.prototype.add = async function(filename) {
               })
               .catch(error => {
                 if (self.isDebugActive()) console.error(error)
+                // fix: end the file in the zip even if the download fails, otherwise the zip never finishes
+                try { zippedFileStream.push(new Uint8Array(0), true) } catch (e) {}
                 controller.error(error)
               })
           }
